@@ -2,22 +2,19 @@ import { getAllPosts, getPostBySlug } from '@/lib/posts';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { notFound } from 'next/navigation';
 
-const GENRE_ICONS: Record<string, string> = {
-  haircolor: '🎨', haircare: '✨', skincare: '🌸', nail: '💅', supplement: '💊',
-};
-
 export async function generateStaticParams() {
   return getAllPosts().map(p => ({ slug: p.slug }));
 }
 
-export default function ArticlePage({ params }: { params: { slug: string } }) {
-  const post = getPostBySlug(params.slug);
+export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
   if (!post) notFound();
   return (
     <>
       <div className="article-hero">
         <div className="article-hero-inner">
-          <p className="article-genre">{GENRE_ICONS[post.genre] || '📄'} {post.genre}</p>
+          <p className="article-genre">{post.genre}</p>
           <h1 className="article-title">{post.title}</h1>
           <div className="article-meta"><span>{post.date}</span></div>
           {post.tags.length > 0 && (
