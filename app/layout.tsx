@@ -4,6 +4,7 @@ import './globals.css';
 export const metadata: Metadata = {
   title: { default: '筋トレLAB', template: '%s | 筋トレLAB' },
   description: '筋トレ・ダイエット・プロテインの最新情報とおすすめ商品を紹介',
+  verification: { google: 'xpdiFRYHloMJxfhCT-IMD08p5na4v9WUqvPY9OrDsHs' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
