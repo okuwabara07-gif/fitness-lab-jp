@@ -1,31 +1,15 @@
 import type { Metadata } from 'next';
 import './globals.css';
-
 export const metadata: Metadata = {
-  title: '筋トレLAB | K-Beauty Portal',
-  description: '筋トレ・プロテイン・宅トレの最新比較ランキング',
-  openGraph: {
-    title: '筋トレLAB',
-    description: '筋トレ・プロテイン・宅トレの最新比較ランキング',
-    siteName: 'K-Beauty Portal',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: '筋トレLAB',
-    description: '筋トレ・プロテイン・宅トレの最新比較ランキング',
-    site: '@beauty_note_j',
-    creator: '@beauty_note_j',
-  },
+  title: 'Fitness Lab',
+  description: '筋トレ・プロテインの最新比較ランキング',
+  twitter: { card: 'summary_large_image', site: '@beauty_note_j' },
 };
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com"/>
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;700&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
-              <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3460729726810386" crossOrigin="anonymous"/>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3460729726810386" crossOrigin="anonymous"></script>
       </head>
       <body>{children}</body>
     </html>
