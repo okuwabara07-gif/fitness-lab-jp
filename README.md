@@ -1,2 +1,3 @@
 # fitness-lab-jp
-筋トレLAB - アフィリエイトサイト
+
+Updated: 2026-04-01
