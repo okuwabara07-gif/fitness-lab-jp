@@ -2,5 +2,10 @@
 module.exports = {
   siteUrl: 'https://fitness-lab-jp.vercel.app',
   generateRobotsTxt: true,
-  outDir: './public',
-};
+  robotsTxtOptions: {
+    additionalSitemaps: ['https://fitness-lab-jp.vercel.app/sitemap.xml'],
+  },
+  changefreq: 'daily',
+  priority: 0.7,
+  sitemapSize: 5000,
+}
