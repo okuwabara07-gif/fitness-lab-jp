@@ -7,9 +7,9 @@ const AMAZON_TRACKING_ID = process.env.AMAZON_TRACKING_ID || 'haircolorab22-22';
 const RAKUTEN_AFFILIATE_ID = process.env.RAKUTEN_AFFILIATE_ID || '5253b9ed.08f9d938.5253b9ee.e71aefe8';
 const MOSHIMO_ID = '1184522';
 
-const SITE_NAME = '筋トレLAB';
-const TOPIC = '筋トレ・プロテイン・宅トレ';
-const CRITERIA = '効果・コスパ・飲みやすさ・成分・使いやすさ';
+const SITE_NAME = 'フィットネスLab';
+const TOPIC = 'フィットネス・筋トレ・ダイエット';
+const CRITERIA = '効果・続けやすさ・コスパ・安全性・口コミ';
 
 function moshimoAmazonLink(keyword) {
   const searchUrl = encodeURIComponent(`https://www.amazon.co.jp/s?k=${encodeURIComponent(keyword)}&tag=${AMAZON_TRACKING_ID}`);
