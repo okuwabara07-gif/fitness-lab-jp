@@ -12,6 +12,7 @@ const CRITERIA = '効果・使いやすさ・コスパ・耐久性・口コミ';
 const A8_NAME = 'LAVA ホットヨガ';
 const A8_URL = 'https://px.a8.net/svt/ejp?a8mat=4AZR8U+DGLC7E+3HM8+614MN';
 const A8_DESC = '全国展開の人気ホットヨガスタジオ';
+const MODEL = 'claude-sonnet-4-20250514';
 
 function moshimoAmazonLink(keyword) {
   const searchUrl = encodeURIComponent('https://www.amazon.co.jp/s?k=' + encodeURIComponent(keyword) + '&tag=' + AMAZON_TRACKING_ID);
@@ -38,13 +39,21 @@ function request(options, body) {
 
 function getKeywords() {
   const base = TOPIC.split('・')[0];
-  return [
+  const seed = Date.now() % 10;
+  const all = [
     base + 'おすすめランキング',
     base + '人気商品 比較',
     base + '選び方 失敗しない',
     base + '効果 口コミ',
     base + '初心者 どれがいい',
+    base + '最新 トレンド',
+    base + 'プロが教える',
+    base + '徹底レビュー',
+    base + 'コスパ最強',
+    base + '2026年版',
   ];
+  const idx = seed % 5;
+  return all.slice(idx, idx + 5);
 }
 
 async function generateArticle(keyword) {
@@ -73,16 +82,17 @@ async function generateArticle(keyword) {
     '> [→ ' + A8_NAME + 'をチェックする](' + A8_URL + ')\n\n' +
     '[→ Amazonで探す](' + amazonLink + ') | [→ 楽天で探す](' + rakutenLink + ')\n\n' +
     '## ' + keyword + ' おすすめTOP5\n\n' +
-    '(実際の商品名を使い各商品150文字以上でレビュー)\n\n' +
+    '(実際の商品名を使い各商品200文字以上でレビュー。メリット・デメリット・こんな人におすすめ を必ず記載)\n\n' +
     '## 選び方のポイント\n\n' +
     CRITERIA.split('・').map(c => '### ' + c).join('\n') + '\n\n' +
+    '## よくある質問\n\n' +
     '[→ ' + A8_NAME + 'の詳細を見る](' + A8_URL + ')\n\n' +
     '[→ Amazonで今すぐ確認](' + amazonLink + ') | [→ 楽天で最安値を見る](' + rakutenLink + ')\n\n' +
     '## まとめ\n\n' +
     '※本記事はアフィリエイト広告を含みます。';
 
   const body = JSON.stringify({
-    model: 'claude-sonnet-4-20250514',
+    model: MODEL,
     max_tokens: 3000,
     messages: [{ role: 'user', content: prompt }]
   });
@@ -100,7 +110,7 @@ async function generateArticle(keyword) {
   }, body);
 
   const data = JSON.parse(res.body);
-  if (!data.content || !data.content[0]) throw new Error('API error: ' + res.body.slice(0, 200));
+  if (!data.content || !data.content[0]) throw new Error('API error: ' + res.body.slice(0, 300));
   return data.content[0].text;
 }
 
@@ -108,7 +118,7 @@ async function main() {
   const blogDir = path.join(process.cwd(), 'content/blog');
   if (!fs.existsSync(blogDir)) fs.mkdirSync(blogDir, { recursive: true });
   const keywords = getKeywords();
-  console.log('Generating ' + keywords.length + ' articles for ' + SITE_NAME);
+  console.log('Generating ' + keywords.length + ' articles for ' + SITE_NAME + ' [' + MODEL + ']');
   for (const keyword of keywords) {
     try {
       console.log('Generating: ' + keyword);
